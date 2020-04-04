@@ -1,9 +1,9 @@
 Something like this:
 
-    docker run --rm -d  \
-                -v /source:/input \
-                -v /dest:/output \
-                chrisjohnson00/handbrakecli \
-                -i /input/movie.mkv \
-                -o /output/movie.mkv \
-                $HANDBRAKE_OPTIONS
+    docker run --rm -d \
+            -v /path/to/your/movie:/input \
+            -v /path/to/put/finished/file:/output \
+            chrisjohnson00/handbrakecli \
+            input_movie_filename.mkv \
+            output_movie_filename.mkv \
+            "Profile name"
