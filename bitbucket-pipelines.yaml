@@ -1,0 +1,24 @@
+pipelines:
+  default:
+    - step:
+        caches:
+          - docker
+        script:
+          - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+          - docker build -t chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH .
+          - docker push chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH
+        services:
+          - docker
+  tags:
+    '*':
+      - step:
+          caches:
+            - docker
+          script:
+            - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+            - docker build -t chrisjohnson00/handbrakecli:latest .
+            - docker tag chrisjohnson00/handbrakecli:latest chrisjohnson00/handbrakecli:$BITBUCKET_TAG
+            - docker push chrisjohnson00/handbrakecli:latest
+            - docker push chrisjohnson00/handbrakecli:$BITBUCKET_TAG
+          services:
+            - docker
