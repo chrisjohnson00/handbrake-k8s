@@ -22,4 +22,5 @@ echo "Removing input file"
 rm -f "/input/${IN_FILE_NAME}"
 
 echo "Sending notification to the kafka topic"
+cd /
 python3 ./sendFiileToTopic.py "${OUT_FILE_NAME}"
