@@ -17,3 +17,5 @@ move_type = os.environ.get("JOB_TYPE")
 future = producer.send(topic='completedHandbrakeEncoding', value={'filename': filename, 'move_type': move_type})
 
 result = future.get(timeout=60)
+
+print("INFO: Sent notification for {}".format(filename), flush=True)
