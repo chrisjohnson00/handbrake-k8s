@@ -28,7 +28,7 @@ print("INFO: Copying file into container FS", flush=True)
 subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(in_file_name)], check=True)
 
 command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
-           "--preset", "\"{}\"".format(enc_profile)]
+           "--preset", "{}".format(enc_profile)]
 print(command, flush=True)
 handbrake_command = subprocess.run(command, check=True)
 
