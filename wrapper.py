@@ -35,7 +35,8 @@ command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/e
            "--preset", "{}".format(enc_profile)]
 print(command, flush=True)
 handbrake_command = subprocess.run(command, check=True)
-file_encoding_time.labels(move_type, enc_profile, in_file_name).set((time.localtime() - start_time))
+end_time = time.localtime()
+file_encoding_time.labels(move_type, enc_profile, in_file_name).set((end_time - start_time))
 
 print("INFO: Moving output file from container FS to mounted output dir", flush=True)
 subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".format(out_file_name)], check=True)
