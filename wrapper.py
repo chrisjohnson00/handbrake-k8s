@@ -51,5 +51,5 @@ result = future.get(timeout=60)
 file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec
 print("INFO: Sent notification for {}".format(in_file_name), flush=True)
 
-# sleep for 20s to ensure tha prometheus scrapes the last set of stats
-time.sleep(20)
+# sleep for 65s to ensure tha prometheus scrapes the last set of stats
+time.sleep(65)
