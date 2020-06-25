@@ -8,8 +8,8 @@ pipelines:
           - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
           - docker build -t chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH .
           - docker push chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH
-#          - docker tag chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH chrisjohnson00/handbrakecli:latest
-#          - docker push chrisjohnson00/handbrakecli:latest
+          - docker tag chrisjohnson00/handbrakecli:$BITBUCKET_BRANCH chrisjohnson00/handbrakecli:latest
+          - docker push chrisjohnson00/handbrakecli:latest
         services:
           - docker
   tags:
