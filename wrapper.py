@@ -5,6 +5,7 @@ import os
 from prometheus_client import Gauge, start_http_server, Summary
 import subprocess
 import time
+import calendar
 
 if len(sys.argv) != 4:
     exit("Must pass infile outfile encprofile")
@@ -30,12 +31,12 @@ subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(i
 
 file_encoding_time = Gauge('handbrake_job_encoding_duration', "Job Encoding Duration",
                            labelnames=["type", "profile", "filename"])
-start_time = time.localtime()
+start_time = calendar.timegm(time.gmtime())
 command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
            "--preset", "{}".format(enc_profile)]
 print(command, flush=True)
 handbrake_command = subprocess.run(command, check=True)
-end_time = time.localtime()
+end_time = calendar.timegm(time.gmtime())
 file_encoding_time.labels(move_type, enc_profile, in_file_name).set((end_time - start_time))
 
 print("INFO: Moving output file from container FS to mounted output dir", flush=True)
