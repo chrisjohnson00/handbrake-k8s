@@ -30,6 +30,7 @@ subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(i
 
 file_encoding_time = Summary('handbrake_job_encoding_duration', "Job Encoding Duration",
                              labelnames=["type", "profile", "filename"])
+file_encoding_time.labels(move_type, enc_profile, in_file_name)
 with file_encoding_time.time():
     command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
                "--preset", "{}".format(enc_profile)]
