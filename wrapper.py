@@ -28,13 +28,14 @@ file_encoding_metrics.labels(move_type, enc_profile, in_file_name).inc()
 print("INFO: Copying file into container FS", flush=True)
 subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(in_file_name)], check=True)
 
-file_encoding_time = Summary('handbrake_job_encoding_duration', "Job Encoding Duration",
-                             labelnames=["type", "profile", "filename"])
-with file_encoding_time.labels(move_type, enc_profile, in_file_name).time():
-    command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
-               "--preset", "{}".format(enc_profile)]
-    print(command, flush=True)
-    handbrake_command = subprocess.run(command, check=True)
+file_encoding_time = Gauge('handbrake_job_encoding_duration', "Job Encoding Duration",
+                           labelnames=["type", "profile", "filename"])
+start_time = time.mktime()
+command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
+           "--preset", "{}".format(enc_profile)]
+print(command, flush=True)
+handbrake_command = subprocess.run(command, check=True)
+file_encoding_time.labels(move_type, enc_profile, in_file_name).set((time.mktime() - start_time))
 
 print("INFO: Moving output file from container FS to mounted output dir", flush=True)
 subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".format(out_file_name)], check=True)
