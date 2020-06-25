@@ -2,7 +2,7 @@ from json import dumps
 from kafka import KafkaProducer
 import sys
 import os
-from prometheus_client import Gauge, start_http_server
+from prometheus_client import Gauge, start_http_server, Summary
 import subprocess
 import time
 
@@ -28,9 +28,9 @@ file_encoding_metrics.labels(move_type, enc_profile, in_file_name).inc()
 print("INFO: Copying file into container FS", flush=True)
 subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(in_file_name)], check=True)
 
-file_encoding_time = Gauge('handbrake_job_encoding_duration',"Job Encoding Duration",labelnames=["type", "profile", "filename"])
-file_encoding_time.set_to_current_time()
-with file_encoding_time.track_inprogress():
+file_encoding_time = Summary('handbrake_job_encoding_duration', "Job Encoding Duration",
+                             labelnames=["type", "profile", "filename"])
+with file_encoding_time.time():
     command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
                "--preset", "{}".format(enc_profile)]
     print(command, flush=True)
