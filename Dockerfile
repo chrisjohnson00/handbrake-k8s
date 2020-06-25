@@ -14,6 +14,7 @@ COPY requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY wrapper.sh /wrapper.sh
-COPY sendFileToTopic.py /sendFileToTopic.py
+COPY wrapper.py /wrapper.py
 
+# For backward compatability, wrapper.sh just calls wrapper.py
 ENTRYPOINT ["./wrapper.sh"]

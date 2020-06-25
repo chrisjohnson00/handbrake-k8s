@@ -10,16 +10,4 @@ IN_FILE_NAME=$1
 OUT_FILE_NAME=$2
 ENC_PROFILE=$3
 
-echo "Copying file into container FS"
-cp "/input/${IN_FILE_NAME}" "/encode_in/${IN_FILE_NAME}"
-
-HandBrakeCLI -i "/encode_in/${IN_FILE_NAME}" -o "/encode_out/${OUT_FILE_NAME}" --preset "${ENC_PROFILE}"
-
-echo "Moving output file from container FS to mounted output dir"
-mv "/encode_out/${OUT_FILE_NAME}" "/output/${OUT_FILE_NAME}"
-
-echo "Removing input file"
-rm -f "/input/${IN_FILE_NAME}"
-
-echo "Sending notification to the kafka topic"
-python3 /sendFileToTopic.py "${OUT_FILE_NAME}"
+python3 /wrapper.py "${IN_FILE_NAME}" "${OUT_FILE_NAME}" "${ENC_PROFILE}"
