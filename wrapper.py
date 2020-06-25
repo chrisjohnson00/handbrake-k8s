@@ -4,6 +4,7 @@ import sys
 import os
 from prometheus_client import Gauge, start_http_server
 import subprocess
+import time
 
 if len(sys.argv) != 4:
     exit("Must pass infile outfile encprofile")
@@ -27,10 +28,13 @@ file_encoding_metrics.labels(move_type, enc_profile, in_file_name).inc()
 print("INFO: Copying file into container FS", flush=True)
 subprocess.run(["cp", "/input/{}".format(in_file_name), "/encode_in/{}".format(in_file_name)], check=True)
 
-command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
-           "--preset", "{}".format(enc_profile)]
-print(command, flush=True)
-handbrake_command = subprocess.run(command, check=True)
+file_encoding_time = Gauge('handbrake_job_encoding_duration',"Job Encoding Duration",labelnames=["type", "profile", "filename"])
+file_encoding_time.set_to_current_time()
+with file_encoding_time.track_inprogress():
+    command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
+               "--preset", "{}".format(enc_profile)]
+    print(command, flush=True)
+    handbrake_command = subprocess.run(command, check=True)
 
 print("INFO: Moving output file from container FS to mounted output dir", flush=True)
 subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".format(out_file_name)], check=True)
@@ -43,3 +47,6 @@ result = future.get(timeout=60)
 
 file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec
 print("INFO: Sent notification for {}".format(in_file_name), flush=True)
+
+# sleep for 20s to ensure tha prometheus scrapes the last set of stats
+time.sleep(20)
