@@ -51,5 +51,9 @@ result = future.get(timeout=60)
 file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec
 print("INFO: Sent notification for {}".format(in_file_name), flush=True)
 
-# sleep for 65s to ensure tha prometheus scrapes the last set of stats
-time.sleep(65)
+file_encoding_complete = Gauge('handbrake_job_encoding_complete', 'Job Encoding Complete',
+                               labelnames=["type", "profile", "filename"])
+file_encoding_complete.labels(move_type, enc_profile, in_file_name).set(1)
+
+# sleep for 90s to ensure that prometheus scrapes the last set of stats
+time.sleep(90)
