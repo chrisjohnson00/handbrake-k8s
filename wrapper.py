@@ -48,7 +48,7 @@ subprocess.run(["rm", "-f", "/input/{}".format(in_file_name)], check=True)
 future = producer.send(topic='completedHandbrakeEncoding', value={'filename': in_file_name, 'move_type': move_type})
 result = future.get(timeout=60)
 
-file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec
+file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec()
 print("INFO: Sent notification for {}".format(in_file_name), flush=True)
 
 file_encoding_complete = Gauge('handbrake_job_encoding_complete', 'Job Encoding Complete',
