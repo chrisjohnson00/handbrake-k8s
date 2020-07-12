@@ -45,7 +45,7 @@ subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".forma
 print("INFO: Removing input file", flush=True)
 subprocess.run(["rm", "-f", "/input/{}".format(in_file_name)], check=True)
 
-future = producer.send(topic='completedHandbrakeEncoding', value={'filename': in_file_name, 'move_type': move_type})
+future = producer.send(topic='handbrakeFile', value={'filename': in_file_name, 'move_type': move_type})
 result = future.get(timeout=60)
 
 file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec()
