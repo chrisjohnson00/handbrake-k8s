@@ -1,5 +1,7 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Los_Angeles
 RUN apt-get update && \
     apt-get install -y handbrake-cli python3 python3-pip && \
     rm -rf /var/lib/apt/lists/* && \
