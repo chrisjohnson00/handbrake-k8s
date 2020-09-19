@@ -33,7 +33,8 @@ file_encoding_time = Gauge('handbrake_job_encoding_duration', "Job Encoding Dura
                            labelnames=["type", "profile", "filename"])
 start_time = calendar.timegm(time.gmtime())
 command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
-           "--preset", "{}".format(enc_profile)]
+           "--preset", "{}".format(enc_profile), "--audio-lang-list", "English", "--all-audio", "--subtitle-lang-list",
+           "English", "--all-subtitles"]
 print(command, flush=True)
 handbrake_command = subprocess.run(command, check=True)
 end_time = calendar.timegm(time.gmtime())
