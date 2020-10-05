@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+#
 # input params:
 # 1 - input file name
 # 2 - output file name
