@@ -17,4 +17,5 @@ COPY wrapper.py /wrapper.py
 
 COPY profiles /profiles
 
-ENTRYPOINT ["./wrapper.py"]
+# For backward compatability, wrapper.sh just calls wrapper.py
+ENTRYPOINT ["./wrapper.sh"]
