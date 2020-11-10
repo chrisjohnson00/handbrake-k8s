@@ -12,6 +12,7 @@ if len(sys.argv) != 4:
 
 producer = KafkaProducer(bootstrap_servers=['kafka-headless.kafka.svc.cluster.local:9092'],
                          acks=1,
+                         api_version_auto_timeout_ms=10000,
                          value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
 
