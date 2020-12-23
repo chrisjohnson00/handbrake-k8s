@@ -1,0 +1,22 @@
+version: 2
+updates:
+- package-ecosystem: 'pip'
+  directory: '/'
+  schedule:
+    interval: 'daily'
+  pull-request-branch-name:
+    separator: '-'
+  open-pull-requests-limit: 99
+  commit-message:
+    prefix: 'chore'
+  target-branch: 'develop'
+- package-ecosystem: 'docker'
+  directory: '/'
+  schedule:
+    interval: 'daily'
+  pull-request-branch-name:
+    separator: '-'
+  open-pull-requests-limit: 99
+  commit-message:
+    prefix: 'chore'
+  target-branch: 'develop'
