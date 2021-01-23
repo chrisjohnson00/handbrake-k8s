@@ -10,12 +10,6 @@ import calendar
 if len(sys.argv) != 4:
     exit("Must pass infile outfile encprofile")
 
-producer = KafkaProducer(bootstrap_servers=['kafka-headless.kafka.svc.cluster.local:9092'],
-                         acks=1,
-                         api_version_auto_timeout_ms=10000,
-                         value_serializer=lambda x:
-                         dumps(x).encode('utf-8'))
-
 in_file_name = sys.argv[1]
 out_file_name = sys.argv[2]
 enc_profile = sys.argv[3]
@@ -46,6 +40,12 @@ subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".forma
 
 print("INFO: Removing input file", flush=True)
 subprocess.run(["rm", "-f", "/input/{}".format(in_file_name)], check=True)
+
+producer = KafkaProducer(bootstrap_servers=['kafka-headless.kafka.svc.cluster.local:9092'],
+                         acks=1,
+                         api_version_auto_timeout_ms=10000,
+                         value_serializer=lambda x:
+                         dumps(x).encode('utf-8'))
 
 future = producer.send(topic='handbrakeFile', value={'filename': out_file_name, 'move_type': move_type})
 result = future.get(timeout=60)
