@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.1.3](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.1.3) (2021-01-30)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.1.2...v2.1.3)
+
+**Fixed bugs:**
+
+- fix: no brokers available, due to too many open connections? [\#4](https://github.com/chrisjohnson00/handbrake-k8s/pull/4) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.1.2](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.1.2) (2020-12-23)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.1.1...v2.1.2)
