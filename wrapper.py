@@ -6,6 +6,7 @@ from prometheus_client import Gauge, start_http_server, Summary
 import subprocess
 import time
 import calendar
+import consul
 
 if len(sys.argv) != 4:
     exit("Must pass infile outfile encprofile")
@@ -14,8 +15,22 @@ in_file_name = sys.argv[1]
 out_file_name = sys.argv[2]
 enc_profile = sys.argv[3]
 move_type = os.environ.get("JOB_TYPE")
+CONFIG_PATH = "handbrake-job"
 
 start_http_server(8080)
+
+
+def get_config(key, config_path=CONFIG_PATH):
+    if os.environ.get(key):
+        return os.environ.get(key)
+    try:
+        c = consul.Consul()
+        index, data = c.kv.get("{}/{}".format(config_path, key))
+        return data['Value'].decode("utf-8")
+    except Exception:
+        print("WARN: {} was not found in Consul".format(key), flush=True)
+        return ""
+
 
 file_encoding_metrics = Gauge('handbrake_job_encoding_in_process', 'Job Encoding',
                               labelnames=["type", "profile", "filename"])
@@ -28,9 +43,8 @@ file_encoding_time = Gauge('handbrake_job_encoding_duration', "Job Encoding Dura
                            labelnames=["type", "profile", "filename"])
 start_time = calendar.timegm(time.gmtime())
 command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
-           "--preset", "{}".format(enc_profile), "--preset-import-file", "/profiles/myprofiles.json", "--aencoder",
-           "copy:ac3,copy:aac,copy:dts,copy:dtshd,copy:mp3,copy:flac,copy:eac3,copy:truehd", "-s",
-           "'1,2,3,4,5,6,7,8,9,10'"]
+           "--preset", "{}".format(enc_profile), "--preset-import-file", "/profiles/myprofiles.json",
+           get_config('HANDBRAKE_ADDITIONAL_PARAMETERS')]
 print(command, flush=True)
 handbrake_command = subprocess.run(command, check=True)
 end_time = calendar.timegm(time.gmtime())

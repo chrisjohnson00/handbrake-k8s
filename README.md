@@ -8,3 +8,9 @@ Something like this:
             input_movie_filename.mkv \
             output_movie_filename.mkv \
             "Profile name"
+
+
+# PyPi Dependencies
+
+    pip install --upgrade kafka-python prometheus-client python-consul
+    pip freeze > requirements.txt
