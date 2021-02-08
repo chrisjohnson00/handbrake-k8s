@@ -1,16 +1,5 @@
-Something like this:
-
-    docker run --rm -d \
-            -v /path/to/your/movie:/input \
-            -v /path/to/put/finished/file:/output \
-            -e JOB_TYPE="dev/null" 
-            chrisjohnson00/handbrakecli \
-            input_movie_filename.mkv \
-            output_movie_filename.mkv \
-            "Profile name"
-
-
 # PyPi Dependencies
 
-    pip install --upgrade kafka-python prometheus-client python-consul
+    pip install --upgrade kafka-python prometheus-client python-consul pygogo
     pip freeze > requirements.txt
+    sed -i '/pkg-resources/d' requirements.txt
