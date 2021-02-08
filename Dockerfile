@@ -10,7 +10,8 @@ RUN apt-get update && \
     useradd -ms /bin/bash app && \
     mkdir /encode_in && \
     mkdir /encode_out && \
-    chown app /encode_in /encode_out
+    mkdir /output && \
+    chown app /encode_in /encode_out /output
 
 USER app
 
