@@ -1,7 +1,11 @@
 FROM ubuntu:20.04
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y handbrake-cli python3 python3-pip && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y handbrake-cli \
+                                                      python3 \
+                                                      python3-pip \
+                                                      mediainfo \
+                                                      && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -ms /bin/bash app && \
     mkdir /encode_in && \
@@ -13,10 +17,4 @@ USER app
 COPY requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY wrapper.sh /wrapper.sh
-COPY wrapper.py /wrapper.py
-
-COPY profiles /profiles
-
-# For backward compatability, wrapper.sh just calls wrapper.py
-ENTRYPOINT ["./wrapper.sh"]
+COPY . .
