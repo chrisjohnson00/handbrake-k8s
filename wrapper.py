@@ -2,7 +2,7 @@ from json import dumps
 from kafka import KafkaProducer
 import sys
 import os
-from prometheus_client import Gauge, start_http_server, Summary
+from prometheus_client import Gauge, start_http_server
 import subprocess
 import time
 import calendar
@@ -47,7 +47,7 @@ def main(in_file_name, out_file_name, enc_profile, move_type):
                "--preset", "{}".format(enc_profile), "--preset-import-file", "/profiles/myprofiles.json"]
     command = command + get_config('HANDBRAKE_ADDITIONAL_PARAMETERS').split()
     print(command, flush=True)
-    handbrake_command = subprocess.run(command, check=True)
+    subprocess.run(command, check=True)
     end_time = calendar.timegm(time.gmtime())
     file_encoding_time.labels(move_type, enc_profile, in_file_name).set((end_time - start_time))
 
@@ -64,7 +64,7 @@ def main(in_file_name, out_file_name, enc_profile, move_type):
                              dumps(x).encode('utf-8'))
 
     future = producer.send(topic='handbrakeFile', value={'filename': out_file_name, 'move_type': move_type})
-    result = future.get(timeout=60)
+    future.get(timeout=60)
 
     file_encoding_metrics.labels(move_type, enc_profile, in_file_name).dec()
     print("INFO: Sent notification for {}".format(in_file_name), flush=True)
