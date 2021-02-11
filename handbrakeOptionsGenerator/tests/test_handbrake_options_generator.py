@@ -38,12 +38,6 @@ def test_get_subtitle_flags_simpsons(fs):
     assert flags == []
 
 
-def test_get_codec_flag():
-    handbrake_options = HandbrakeOptionGenerator(mock.Mock(Mediainfo))
-    flag = handbrake_options.get_codec_flag('A_AAC-2')
-    assert flag == 'copy:aac'
-
-
 def test_get_audio_codec_flags():
     mock_mediainfo = mock.Mock(Mediainfo)
     mediainfo_attrs = {'get_audio_codec_ids.return_value': ['A_DTS', 'A_AC3', 'A_TRUEHD'],
@@ -52,7 +46,7 @@ def test_get_audio_codec_flags():
     handbrake_options = HandbrakeOptionGenerator(mock_mediainfo)
     handbrake_options.get_audio_codec_flags()
     flags = handbrake_options.audio_flags
-    assert flags == ['--aencoder', 'copy:ac3,copy:dts,copy:dtshd,copy:truehd']
+    assert flags == ['--aencoder', 'copy:ac3,copy:dts,copy:dtshd,copy:truehd', '--audio-fallback', 'av_aac']
 
 
 def test_get_audio_codec_flags_no_copy_matches():
@@ -72,7 +66,7 @@ def test_get_audio_codec_flags_duplicate_codecs():
     handbrake_options = HandbrakeOptionGenerator(mock_mediainfo)
     handbrake_options.get_audio_codec_flags()
     flags = handbrake_options.audio_flags
-    assert flags == ['--aencoder', 'copy:ac3']
+    assert flags == ['--aencoder', 'copy:ac3', '--audio-fallback', 'av_aac']
 
 
 def test_get_video_flags():
@@ -95,12 +89,12 @@ def test_get_audio_track_number_flags():
 
 def test_get_audio_track_bitrates():
     mock_mediainfo = mock.Mock(Mediainfo)
-    mediainfo_attrs = {'get_audio_tracks.return_value': [{'BitRate': '100'}, {'BitRate': '200'}]}
+    mediainfo_attrs = {'get_audio_tracks.return_value': [{'BitRate': '1000'}, {'BitRate': '2000'}]}
     mock_mediainfo.configure_mock(**mediainfo_attrs)
     handbrake_options = HandbrakeOptionGenerator(mock_mediainfo)
     handbrake_options.get_audio_track_bitrates()
     flags = handbrake_options.audio_flags
-    assert flags == ['--ab', '100,200']
+    assert flags == ['--ab', '1,2']
 
 
 def test_get_audio_track_sample_rate():
@@ -111,3 +105,16 @@ def test_get_audio_track_sample_rate():
     handbrake_options.get_audio_track_sample_rate()
     flags = handbrake_options.audio_flags
     assert flags == ['--arate', 'auto,auto']
+
+
+def test_get_audio_mixing_flags(fs):
+    file_name = "jersey_girl.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    handbrake_options = HandbrakeOptionGenerator(mediainfo)
+    handbrake_options.get_audio_mixing_flags()
+    flags = handbrake_options.audio_flags
+    assert flags == ['--mixdown', '5point1,5point1,stereo,stereo,stereo,stereo']
