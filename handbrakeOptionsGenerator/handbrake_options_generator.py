@@ -1,4 +1,5 @@
 from mediainfo.mediainfo import Mediainfo
+from handbrakeUtilities.handbrake_utilities import get_mixing_flag, get_codec_flag
 
 
 class HandbrakeOptionGenerator:
@@ -13,7 +14,7 @@ class HandbrakeOptionGenerator:
             self.get_audio_track_number_flags()
             self.get_audio_track_bitrates()
             self.get_audio_track_sample_rate()
-        # --mixdown ??? it has defaults, will they work?
+            self.get_audio_mixing_flags()
         return self.audio_flags
 
     def get_audio_track_number_flags(self):
@@ -28,7 +29,8 @@ class HandbrakeOptionGenerator:
         audio_tracks = self.mediainfo.get_audio_tracks()
         bit_rates = []
         for track in audio_tracks:
-            bit_rates.append(track['BitRate'])
+            # convert from string to int, do the math, then convert from float to int, then finally to string!
+            bit_rates.append(str(int(int(track['BitRate']) / 1000)))
         self.audio_flags.append(",".join(bit_rates))
 
     def get_audio_track_sample_rate(self):
@@ -43,7 +45,7 @@ class HandbrakeOptionGenerator:
         codecs = self.mediainfo.get_audio_codec_ids()
         copy_flags = []
         for codec in codecs:
-            flag = self.get_codec_flag(codec)
+            flag = get_codec_flag(codec)
             if flag:
                 copy_flags.append(flag)
         if copy_flags:
@@ -51,25 +53,16 @@ class HandbrakeOptionGenerator:
             flag_list = list(set(copy_flags))
             flag_list.sort()
             self.audio_flags.append(",".join(flag_list))
-        else:
-            self.audio_flags.append('--audio-fallback')
-            self.audio_flags.append('av_aac')
+        self.audio_flags.append('--audio-fallback')
+        self.audio_flags.append('av_aac')
 
-    @staticmethod
-    def get_codec_flag(codec):
-        codec_map = [
-            {'codec_id': 'A_DTS', 'copy': 'copy:dts,copy:dtshd'},
-            {'codec_id': 'A_AC3', 'copy': 'copy:ac3'},
-            {'codec_id': 'ac-3', 'copy': 'copy:ac3'},
-            {'codec_id': 'A_TRUEHD', 'copy': 'copy:truehd'},
-            {'codec_id': 'A_MPEG/L3', 'copy': 'copy:mp3'},
-            {'codec_id': 'A_AAC-2', 'copy': 'copy:aac'},
-            {'codec_id': 'mp4a-40-2', 'copy': 'copy:aac'},
-        ]
-        for item in codec_map:
-            if item['codec_id'] == codec:
-                return item['copy']
-        return None
+    def get_audio_mixing_flags(self):
+        self.audio_flags.append('--mixdown')
+        audio_tracks = self.mediainfo.get_audio_tracks()
+        mix_flags = []
+        for track in audio_tracks:
+            mix_flags.append(get_mixing_flag(track['Channels']))
+        self.audio_flags.append(",".join(mix_flags))
 
     def generate_subtitle_flags(self):
         subtitle_flags = []
@@ -85,6 +78,5 @@ class HandbrakeOptionGenerator:
         # --vfr, --cfr, --pfr
         if self.mediainfo.get_video_frame_rate_mode() != 'CFR':
             raise Exception("Found a new frame rate mode, add it to handbrake-container")
-            exit(-1)
         frame_rate_mode = '--cfr'
         return ['-r', self.mediainfo.get_video_frame_rate(), frame_rate_mode]

@@ -66,3 +66,18 @@ class Mediainfo:
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
         return first_track['FrameRate_Mode']
+
+    def get_video_bit_rate_maximum(self):
+        video_tracks = self.get_video_tracks()
+        first_track = video_tracks[0]
+        return first_track['BitRate_Maximum']
+
+    def get_video_bit_rate(self):
+        video_tracks = self.get_video_tracks()
+        first_track = video_tracks[0]
+        return first_track['BitRate']
+
+    def get_video_bit_rate_mode(self):
+        video_tracks = self.get_video_tracks()
+        first_track = video_tracks[0]
+        return first_track['BitRate_Mode']
