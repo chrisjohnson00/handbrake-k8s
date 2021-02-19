@@ -67,3 +67,115 @@ def test_get_video_frame_rate(fs):
         mediainfo.set_mediainfo_json(json.load(f))
     fr = mediainfo.get_video_frame_rate()
     assert fr == '23.976'
+
+
+def test_get_video_frame_rate_mode(fs):
+    file_name = "harry_potter_prizoner.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    frm = mediainfo.get_video_frame_rate_mode()
+    assert frm == 'CFR'
+
+
+def test_get_video_bit_rate(fs):
+    file_name = "harry_potter_prizoner.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    br = mediainfo.get_video_bit_rate()
+    assert br == '19299022'
+
+
+def test_get_video_bit_rate_maximum(fs):
+    file_name = "jersey_girl.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    br = mediainfo.get_video_bit_rate_maximum()
+    assert br == '24999936'
+
+
+def test_get_video_bit_rate_mode(fs):
+    file_name = "jersey_girl.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    brm = mediainfo.get_video_bit_rate_mode()
+    assert brm == 'VBR'
+
+
+def test_get_video_bit_depth(fs):
+    file_name = "jersey_girl.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    bd = mediainfo.get_video_bit_depth()
+    assert bd == '8'
+
+
+def test_get_video_bit_depth_10(fs):
+    file_name = "simpsons_s01e11.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    bd = mediainfo.get_video_bit_depth()
+    assert bd == '10'
+
+
+def test_remove_accents():
+    mediainfo = Mediainfo('x')
+    original_file_name = 'Regé-'
+    new_file_name = mediainfo.remove_accents(original_file_name)
+    assert new_file_name != original_file_name
+
+
+def test_pre_checks():
+    import tempfile
+    tf = tempfile.NamedTemporaryFile(delete=False, prefix='Regé-')
+    mediainfo = Mediainfo(tf.name)
+    mediainfo.pre_checks()
+    assert mediainfo.file_renamed
+    assert not os.path.exists(tf.name)
+
+
+def test_pre_checks_no_rename():
+    import tempfile
+    tf = tempfile.NamedTemporaryFile(delete=False)
+    mediainfo = Mediainfo(tf.name)
+    mediainfo.pre_checks()
+    assert not mediainfo.file_renamed
+    assert os.path.exists(tf.name)
+
+
+def test_post_checks():
+    import tempfile
+    tf1 = tempfile.NamedTemporaryFile(delete=False)
+    tf2 = tempfile.NamedTemporaryFile(delete=False)
+    mediainfo = Mediainfo(tf1.name)
+    mediainfo.file_renamed = True
+    mediainfo.full_path = tf1.name
+    mediainfo.original_file_path = tf2.name
+    mediainfo.post_checks()
+    assert not os.path.exists(tf1.name)
+    assert os.path.exists(tf2.name)
+
+
+def test_post_checks_no_opp():
+    import tempfile
+    tf = tempfile.NamedTemporaryFile(delete=False)
+    mediainfo = Mediainfo(tf.name)
+    mediainfo.post_checks()
+    assert os.path.exists(tf.name)

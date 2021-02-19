@@ -12,10 +12,6 @@ class HandbrakeProfileGenerator:
         self.video_framerate_mode = None
         self.video_quality = None
 
-    # def load_profile_from_file(self, file_path):
-    #     with open(file_path) as f:
-    #         self.profile = json.load(f)
-
     def set_mediainfo(self, mediainfo: Mediainfo):
         self.mediainfo = mediainfo
 
@@ -23,31 +19,12 @@ class HandbrakeProfileGenerator:
         self.video_encoder = encoder
 
     def set_video_quality(self, quality):
-        self.video_quality = quality
+        if quality:
+            self.video_quality = quality
 
     def set_video_avg_bitrate(self, video_avg_bitrate):
-        self.video_avg_bitrate = int(video_avg_bitrate)
-
-    # def replace_profile_key(self, key, value):
-    #     self.profile[key] = value
-    #
-    # def write_to_profile_file(self, file_path):
-    #     with open(file_path, 'w') as outfile:
-    #         json.dump(self.profile, outfile)
-
-    # def build_audio_copy_mask_from_mediainfo(self):
-    #     audio_tracks = self.mediainfo.get_audio_tracks()
-    #     copy_masks = []
-    #     for audio_track in audio_tracks:
-    #         copy_name = self.get_codec_copy_name(audio_track)
-    #         if copy_name:
-    #             copy_masks.append(copy_name)
-    #     return copy_masks
-
-    # def build_audio(self):
-    #     return {"AudioList": self.build_audio_list_from_mediainfo(),
-    #             "CopyMask": self.build_audio_copy_mask_from_mediainfo(),
-    #             "FallbackEncoder": "av_aac"}
+        if video_avg_bitrate:
+            self.video_avg_bitrate = int(video_avg_bitrate)
 
     @staticmethod
     def get_codec_copy_name(audio_track):
@@ -73,7 +50,19 @@ class HandbrakeProfileGenerator:
         audio_tracks = self.mediainfo.get_audio_tracks()
         for track in audio_tracks:
             track['AudioEncoder'] = self.get_codec_copy_name(track)
+            track['AudioBitrate'] = self.get_audio_bitrate(track)
         return audio_tracks
+
+    @staticmethod
+    def get_audio_bitrate(track):
+        if 'BitRate' in track:
+            value = int(track['BitRate'])
+            return int(min([value / 1000, 640]))
+        elif 'BitRate_Maximum' in track:
+            value = int(track['BitRate_Maximum'])
+            return int(value / 1000)
+        else:
+            return 640
 
     def evaluate(self):
         self.audio_tracks = self.build_audio_track_list()

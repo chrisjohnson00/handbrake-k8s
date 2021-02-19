@@ -17,7 +17,7 @@
       "AudioList":
               [{% for track in audio_tracks %}
                       {
-                        "AudioBitrate": {% if track.BitRate %}{{ [((track.BitRate|int())/1000)|int(),640]|min }}{% elif track.BitRate_Maximum %}{{ ((track.BitRate_Maximum|int())/1000)|int() }}{% endif %},
+                        "AudioBitrate": {{ track.AudioBitrate }},
                         "AudioCompressionLevel": 0.0,
                         "AudioDitherMethod": "auto",
                         "AudioEncoder": "{{ track.AudioEncoder }}",
