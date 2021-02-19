@@ -1,5 +1,7 @@
 import subprocess
 from json import loads
+import unicodedata
+import os
 
 
 class Mediainfo:
@@ -7,17 +9,43 @@ class Mediainfo:
     def __init__(self, full_path: str):
         self.full_path = full_path
         self.mediainfo_json = None
+        self.file_renamed = False
+        self.original_file_path = full_path
 
     def execute_mediainfo(self):
         """
         This method calls to mediainfo to get all the details of the media file and returns a dict object
         :return: The mediainfo output as a dict
         """
+        self.pre_checks()
         command = ['mediainfo', '-f', '--Output=JSON', self.full_path]
         completed_process = subprocess.run(command, check=True, capture_output=True)
         mediainfo_json = loads(completed_process.stdout)
         self.mediainfo_json = mediainfo_json
+        self.post_checks()
         return mediainfo_json
+
+    def pre_checks(self):
+        new_file_name = self.remove_accents(self.full_path)
+        if new_file_name != self.full_path:
+            try:
+                os.rename(self.full_path, new_file_name)
+                self.file_renamed = True
+                self.full_path = new_file_name
+            except Exception as e:
+                print(e)
+                raise e
+
+    def post_checks(self):
+        if self.file_renamed:
+            os.rename(self.full_path, self.original_file_path)
+            self.file_renamed = False
+            self.full_path = self.original_file_path
+
+    @staticmethod
+    def remove_accents(s):
+        nkfd_form = unicodedata.normalize('NFKD', s)
+        return u''.join([c for c in nkfd_form if not unicodedata.combining(c)])
 
     def set_mediainfo_json(self, json):
         self.mediainfo_json = json
@@ -81,3 +109,8 @@ class Mediainfo:
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
         return first_track['BitRate_Mode']
+
+    def get_video_bit_depth(self):
+        video_tracks = self.get_video_tracks()
+        first_track = video_tracks[0]
+        return first_track['BitDepth']
