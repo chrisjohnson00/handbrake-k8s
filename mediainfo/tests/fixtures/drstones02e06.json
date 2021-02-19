@@ -1,0 +1,111 @@
+{
+  "media": {
+    "@ref": "/bla/Dr. Stone - S02E06 - Prison Break HDTV-1080p.mkv",
+    "track": [
+      {
+        "@type": "General",
+        "UniqueID": "180548434917907827842394953477991229256",
+        "VideoCount": "1",
+        "AudioCount": "1",
+        "TextCount": "1",
+        "FileExtension": "mkv",
+        "Format": "Matroska",
+        "Format_Version": "4",
+        "FileSize": "618772457",
+        "Duration": "1434.517",
+        "OverallBitRate": "3450764",
+        "FrameRate": "29.970",
+        "FrameCount": "42992",
+        "IsStreamable": "Yes",
+        "File_Modified_Date": "UTC 2021-02-18 17:08:26",
+        "File_Modified_Date_Local": "2021-02-18 17:08:26",
+        "Encoded_Application": "Lavf58.49.100",
+        "Encoded_Library": "Lavf58.49.100",
+        "Copyright": "Luxury",
+        "extra": {
+          "ErrorDetectionType": "Per level 1",
+          "Attachments": "Fonts\\IR.otf / Fonts\\OSSB.ttf / Fonts\\AUMS.ttf / Fonts\\UDNK.ttf",
+          "CRC_Error_Pos": "1871"
+        }
+      },
+      {
+        "@type": "Video",
+        "StreamOrder": "0",
+        "ID": "1",
+        "UniqueID": "4351808065925631452",
+        "Format": "HEVC",
+        "Format_Profile": "Main 10",
+        "Format_Level": "4",
+        "Format_Tier": "Main",
+        "CodecID": "V_MPEGH/ISO/HEVC",
+        "Duration": "1434.499000000",
+        "Width": "1920",
+        "Height": "1080",
+        "Stored_Height": "1088",
+        "Sampled_Width": "1920",
+        "Sampled_Height": "1080",
+        "PixelAspectRatio": "1.000",
+        "DisplayAspectRatio": "1.778",
+        "FrameRate_Mode": "CFR",
+        "FrameRate": "29.970",
+        "FrameCount": "42992",
+        "ColorSpace": "YUV",
+        "ChromaSubsampling": "4:2:0",
+        "BitDepth": "10",
+        "Delay": "0.000",
+        "Encoded_Library": "Lavc58.98.100 hevc_nvenc",
+        "Default": "Yes",
+        "Forced": "No",
+        "colour_description_present": "Yes",
+        "colour_description_present_Source": "Container / Stream",
+        "colour_range": "Limited",
+        "colour_range_Source": "Container / Stream",
+        "colour_primaries_Source": "Stream",
+        "transfer_characteristics_Source": "Stream",
+        "matrix_coefficients": "BT.709",
+        "matrix_coefficients_Source": "Container / Stream",
+        "extra": {
+          "VARIANT_BITRATE": "0"
+        }
+      },
+      {
+        "@type": "Audio",
+        "StreamOrder": "1",
+        "ID": "2",
+        "UniqueID": "14113936712902706622",
+        "Format": "AAC",
+        "Format_AdditionalFeatures": "LC",
+        "CodecID": "A_AAC-2",
+        "Duration": "1434.517000000",
+        "Channels": "2",
+        "ChannelPositions": "Front: L R",
+        "ChannelLayout": "L R",
+        "SamplesPerFrame": "1024",
+        "SamplingRate": "48000",
+        "SamplingCount": "68856816",
+        "FrameRate": "46.875",
+        "Compression_Mode": "Lossy",
+        "Delay": "0.000",
+        "Delay_Source": "Container",
+        "Default": "Yes",
+        "Forced": "No",
+        "extra": {
+          "VARIANT_BITRATE": "0"
+        }
+      },
+      {
+        "@type": "Text",
+        "ID": "3",
+        "UniqueID": "7294604151123638744",
+        "Format": "ASS",
+        "CodecID": "S_TEXT/ASS",
+        "Duration": "1419.170000000",
+        "Compression_Mode": "Lossless",
+        "Language": "en",
+        "Default": "Yes",
+        "Forced": "No"
+      }
+    ]
+  }
+}
+

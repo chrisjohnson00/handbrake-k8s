@@ -13,106 +13,13 @@ def my_fixtures(fs):
     yield fs
 
 
-#
-# def test_load_profile_from_file(fs):
-#     file_name = "jersey_girl.json"
-#     file_path = '/src' + "/" + file_name
-#     fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
-#     hpg = HandbrakeProfileGenerator()
-#     hpg.load_profile_from_file(file_path)
-#     profile = hpg.profile
-#     assert profile['Metadata']['Name'] == "JERSEY GIRL"
-
-
-# def test_build_audio_copy_mask_from_mediainfo():
-#     mock_mediainfo = mock.Mock(Mediainfo)
-#     mediainfo_attrs = {'get_audio_tracks.return_value': [{"CodecID": "A_DTS", "Format_AdditionalFeatures": "XLL"},
-#                                                          {"CodecID": "A_DTS"}, {"CodecID": "foobar"}]}
-#     mock_mediainfo.configure_mock(**mediainfo_attrs)
-#     hpg = HandbrakeProfileGenerator()
-#     hpg.set_mediainfo(mock_mediainfo)
-#     copy_mask = hpg.build_audio_copy_mask_from_mediainfo()
-#     assert copy_mask == ['copy:dtshd', 'copy:dts']
-
-
-# def test_build_audio_list_from_mediainfo():
-#     mock_mediainfo = mock.Mock(Mediainfo)
-#     mediainfo_attrs = {
-#         'get_audio_tracks.return_value': [{'BitRate': 160000, "CodecID": "A_DTS", "Format_AdditionalFeatures": "XLL"},
-#                                           {'BitRate': 320000, "CodecID": "A_DTS"},
-#                                           {'BitRate': 320000, "CodecID": "foobar"}]}
-#     mock_mediainfo.configure_mock(**mediainfo_attrs)
-#     hpg = HandbrakeProfileGenerator(mock_mediainfo)
-#     hpg.build_audio_list_from_mediainfo()
-#     audio_list = hpg.audio_list
-#     assert len(audio_list) == 3
-#     audio_1 = audio_list[0]
-#     audio_2 = audio_list[1]
-#     audio_3 = audio_list[2]
-#     assert audio_1['AudioBitrate'] == 160
-#     assert audio_2['AudioBitrate'] == 320
-#     assert audio_3['AudioBitrate'] == 320
-
-
-# def test_build_audio():
-#     mock_mediainfo = mock.Mock(Mediainfo)
-#     mediainfo_attrs = {
-#         'get_audio_tracks.return_value': [{'BitRate': 160000, "CodecID": "A_DTS", "Format_AdditionalFeatures": "XLL"},
-#                                           {'BitRate': 320000, "CodecID": "A_DTS"},
-#                                           {'BitRate': 160000, "CodecID": "foobar"}]}
-#     mock_mediainfo.configure_mock(**mediainfo_attrs)
-#     hpg = HandbrakeProfileGenerator()
-#     hpg.set_mediainfo(mock_mediainfo)
-#     audio = hpg.build_audio()
-#     expected = {
-#         "AudioList": [
-#             {
-#                 "Bitrate": 160,
-#                 "DRC": 0.0,
-#                 "Encoder": "copy:dtshd",
-#                 "Gain": 0.0,
-#                 "Mixdown": "none",
-#                 "Quality": -3.0,
-#                 "Samplerate": 0,
-#                 "Track": 0
-#             },
-#             {
-#                 "Bitrate": 320,
-#                 "DRC": 0.0,
-#                 "Encoder": "copy:dts",
-#                 "Gain": 0.0,
-#                 "Mixdown": "none",
-#                 "Quality": -3.0,
-#                 "Samplerate": 0,
-#                 "Track": 1
-#             },
-#             {
-#                 "Bitrate": 160,
-#                 "DRC": 0.0,
-#                 "Encoder": "av_aac",
-#                 "Gain": 0.0,
-#                 "Mixdown": "none",
-#                 "Quality": -3.0,
-#                 "Samplerate": 0,
-#                 "Track": 2
-#             }
-#         ],
-#         "CopyMask": [
-#             "copy:dtshd",
-#             "copy:dts"
-#         ],
-#         "FallbackEncoder": "av_aac"
-#     }
-#     assert audio == expected
-
 def test_render_profile():
     import tempfile
     tf = tempfile.NamedTemporaryFile(delete=False)
     mock_mediainfo = mock.Mock(Mediainfo)
     hpg = HandbrakeProfileGenerator(mock_mediainfo)
-    hpg.audio_list = []
+    hpg.audio_tracks = [{'AudioBitrate': 650, 'AudioEncoder': 'yomamma'}]
     hpg.video_avg_bitrate = 14818507
-    hpg.audio_tracks = [{'BitRate': '650000'}, {'BitRate': '15345'}]
     hpg.video_framerate_mode = 'CFR'
     hpg.render_profile(tf.name)
     assert os.path.exists(tf.name)
@@ -120,11 +27,9 @@ def test_render_profile():
         file_contents = f.read()
         assert 'PresetList' in file_contents
         assert '"VideoAvgBitrate": 14818,' in file_contents
-        assert '"AudioBitrate": 640,' in file_contents  # testing the min function
-        assert '"AudioBitrate": 15,' in file_contents
+        assert '"AudioBitrate": 650,' in file_contents
+        assert '"AudioEncoder": "yomamma",' in file_contents
         assert '"VideoFramerateMode": "cfr"' in file_contents
-    # print(tf.name)
-    # exit(-1)
 
 
 def test_build_audio_track_list():
@@ -141,21 +46,61 @@ def test_build_audio_track_list():
     assert audio_track_list[2]['AudioEncoder'] == 'av_aac'
 
 
-def test_render_profile_variable_bit_rate_audio_track():
-    import tempfile
-    tf = tempfile.NamedTemporaryFile(delete=False)
+@pytest.mark.parametrize("track,expected",
+                         [
+                             ({}, 640),
+                             ({'BitRate': '15345'}, 15),
+                             ({'BitRate_Maximum': '7194000'}, 7194)
+                         ])
+def test_get_audio_bitrate(track, expected):
     mock_mediainfo = mock.Mock(Mediainfo)
     hpg = HandbrakeProfileGenerator(mock_mediainfo)
-    hpg.audio_list = []
-    hpg.video_avg_bitrate = 14818507
-    hpg.audio_tracks = [{'BitRate_Maximum': '7194000'}, {'BitRate': '15345'}]
-    hpg.video_framerate_mode = 'CFR'
-    hpg.render_profile(tf.name)
-    assert os.path.exists(tf.name)
-    with open(tf.name) as f:
-        file_contents = f.read()
-        assert 'PresetList' in file_contents
-        assert '"VideoAvgBitrate": 14818,' in file_contents
-        assert '"AudioBitrate": 7194,' in file_contents
-        assert '"AudioBitrate": 15,' in file_contents
-        assert '"VideoFramerateMode": "cfr"' in file_contents
+    bitrate = hpg.get_audio_bitrate(track)
+    assert bitrate == expected
+
+
+def test_evaluate():
+    mock_mediainfo = mock.Mock(Mediainfo)
+    mediainfo_attrs = {
+        'get_audio_tracks.return_value': [],
+        'get_video_frame_rate.return_value': 'None',
+        'get_video_frame_rate_mode.return_value': 'None',
+        'get_video_bit_rate.return_value': '99',
+    }
+    mock_mediainfo.configure_mock(**mediainfo_attrs)
+    hpg = HandbrakeProfileGenerator(mock_mediainfo)
+    hpg = hpg.evaluate()
+    assert hpg.video_avg_bitrate == 99
+
+
+def test_evaluate_pre_set_bitrate():
+    mock_mediainfo = mock.Mock(Mediainfo)
+    mediainfo_attrs = {
+        'get_audio_tracks.return_value': [],
+        'get_video_frame_rate.return_value': 'None',
+        'get_video_frame_rate_mode.return_value': 'None',
+        'get_video_bit_rate.return_value': '99',
+    }
+    mock_mediainfo.configure_mock(**mediainfo_attrs)
+    hpg = HandbrakeProfileGenerator(mock_mediainfo)
+    hpg.video_avg_bitrate = 100
+    hpg = hpg.evaluate()
+    assert hpg.video_avg_bitrate == 100
+
+
+def test_set_video_quality():
+    hpg = HandbrakeProfileGenerator(mock.Mock(Mediainfo))
+    hpg.video_quality = '40'
+    hpg.set_video_quality(None)
+    assert hpg.video_quality == '40'
+    hpg.set_video_quality('20')
+    assert hpg.video_quality == '20'
+
+
+def test_set_video_avg_bitrate():
+    hpg = HandbrakeProfileGenerator(mock.Mock(Mediainfo))
+    hpg.video_avg_bitrate = 40
+    hpg.set_video_avg_bitrate(None)
+    assert hpg.video_avg_bitrate == 40
+    hpg.set_video_avg_bitrate('20')
+    assert hpg.video_avg_bitrate == 20
