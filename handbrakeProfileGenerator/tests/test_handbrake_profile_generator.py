@@ -26,7 +26,6 @@ def test_render_profile():
     with open(tf.name) as f:
         file_contents = f.read()
         assert 'PresetList' in file_contents
-        assert '"VideoAvgBitrate": 14818,' in file_contents
         assert '"AudioBitrate": 650,' in file_contents
         assert '"AudioEncoder": "yomamma",' in file_contents
         assert '"VideoFramerateMode": "cfr"' in file_contents
@@ -65,7 +64,7 @@ def test_evaluate():
         'get_audio_tracks.return_value': [],
         'get_video_frame_rate.return_value': 'None',
         'get_video_frame_rate_mode.return_value': 'None',
-        'get_video_bit_rate.return_value': '99',
+        'get_video_bit_rate.return_value': '99000',
     }
     mock_mediainfo.configure_mock(**mediainfo_attrs)
     hpg = HandbrakeProfileGenerator(mock_mediainfo)
@@ -97,10 +96,21 @@ def test_set_video_quality():
     assert hpg.video_quality == '20'
 
 
-def test_set_video_avg_bitrate():
+def test_set_video_avg_bitrate_value_specified():
     hpg = HandbrakeProfileGenerator(mock.Mock(Mediainfo))
     hpg.video_avg_bitrate = 40
-    hpg.set_video_avg_bitrate(None)
     assert hpg.video_avg_bitrate == 40
-    hpg.set_video_avg_bitrate('20')
-    assert hpg.video_avg_bitrate == 20
+
+
+@pytest.mark.parametrize("bitrate, expected",
+                         [
+                             (None, 6000),
+                             ('7194000', 7194)
+                         ])
+def test_set_video_avg_bitrate(bitrate, expected):
+    mock_mediainfo = mock.Mock(Mediainfo)
+    mediainfo_attrs = {'get_video_bit_rate.return_value': bitrate}
+    mock_mediainfo.configure_mock(**mediainfo_attrs)
+    hpg = HandbrakeProfileGenerator(mock_mediainfo)
+    hpg.set_video_avg_bitrate()
+    assert hpg.video_avg_bitrate == expected

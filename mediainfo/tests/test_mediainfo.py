@@ -80,15 +80,20 @@ def test_get_video_frame_rate_mode(fs):
     assert frm == 'CFR'
 
 
-def test_get_video_bit_rate(fs):
-    file_name = "harry_potter_prizoner.json"
+@pytest.mark.parametrize("file, exoected_bitrate",
+                         [
+                             ('harry_potter_prizoner.json', '19299022'),
+                             ('drstones02e06.json', None),
+                         ])
+def test_get_video_bit_rate(fs, file, exoected_bitrate):
+    file_name = file
     file_path = '/src' + "/" + file_name
     fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
     with open(file_path) as f:
         mediainfo = Mediainfo(file_path)
         mediainfo.set_mediainfo_json(json.load(f))
     br = mediainfo.get_video_bit_rate()
-    assert br == '19299022'
+    assert br == exoected_bitrate
 
 
 def test_get_video_bit_rate_maximum(fs):

@@ -22,10 +22,6 @@ class HandbrakeProfileGenerator:
         if quality:
             self.video_quality = quality
 
-    def set_video_avg_bitrate(self, video_avg_bitrate):
-        if video_avg_bitrate:
-            self.video_avg_bitrate = int(video_avg_bitrate)
-
     @staticmethod
     def get_codec_copy_name(audio_track):
         codec_map = [
@@ -68,9 +64,16 @@ class HandbrakeProfileGenerator:
         self.audio_tracks = self.build_audio_track_list()
         self.video_framerate = self.mediainfo.get_video_frame_rate()
         self.video_framerate_mode = self.mediainfo.get_video_frame_rate_mode()
-        if not self.video_avg_bitrate:
-            self.video_avg_bitrate = int(self.mediainfo.get_video_bit_rate())
+        self.set_video_avg_bitrate()
         return self
+
+    def set_video_avg_bitrate(self):
+        if not self.video_avg_bitrate:
+            vbr = self.mediainfo.get_video_bit_rate()
+            if vbr:
+                self.video_avg_bitrate = int(vbr) / 1000
+            else:
+                self.video_avg_bitrate = 6000
 
     def render_profile(self, file_path):
         template_loader = jinja2.FileSystemLoader(searchpath="./")
