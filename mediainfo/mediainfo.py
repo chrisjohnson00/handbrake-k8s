@@ -103,7 +103,10 @@ class Mediainfo:
     def get_video_bit_rate(self):
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
-        return first_track['BitRate']
+        if 'BitRate' in first_track:
+            return first_track['BitRate']
+        else:
+            return None
 
     def get_video_bit_rate_mode(self):
         video_tracks = self.get_video_tracks()
