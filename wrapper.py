@@ -55,7 +55,8 @@ def main(in_file_name, out_file_name, move_type):
     hpg = HandbrakeProfileGenerator(mediainfo)
     hpg.set_video_encoder(get_config('HANDBRAKE_ENCODER'))
     hpg.set_video_quality(get_config('HANDBRAKE_QUALITY'))
-    hpg.set_video_avg_bitrate(get_config('HANDBRAKE_VIDEO_BITRATE'))
+    if get_config('HANDBRAKE_VIDEO_BITRATE'):
+        hpg.video_avg_bitrate = get_config('HANDBRAKE_VIDEO_BITRATE')
     hpg.evaluate().render_profile('/tmp/generated.json')
 
     # build the handbrake execution command
