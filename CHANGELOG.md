@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.2.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.2.0) (2021-03-04)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.1.3...v2.2.0)
+
+**Breaking changes:**
+
+- feat: dynamically generated profiles [\#6](https://github.com/chrisjohnson00/handbrake-k8s/pull/6) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.1.3](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.1.3) (2021-01-30)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.1.2...v2.1.3)
