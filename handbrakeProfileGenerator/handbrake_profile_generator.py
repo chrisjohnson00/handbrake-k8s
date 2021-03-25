@@ -38,6 +38,8 @@ class HandbrakeProfileGenerator:
                 if 'Format_AdditionalFeatures' in audio_track and audio_track['Format_AdditionalFeatures'] == "XLL" \
                         and item['codec_id'] == 'A_DTS':
                     return 'copy:dtshd'
+                elif 'Format' in audio_track and "XLL" in audio_track['Format'] and item['codec_id'] == 'A_DTS':
+                    return 'copy:dtshd'
                 else:
                     return item['copy']
         return 'av_aac'

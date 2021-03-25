@@ -36,13 +36,15 @@ def test_build_audio_track_list():
     mediainfo_attrs = {
         'get_audio_tracks.return_value': [{'BitRate': 160000, "CodecID": "A_DTS", "Format_AdditionalFeatures": "XLL"},
                                           {'BitRate': 320000, "CodecID": "A_DTS"},
+                                          {'BitRate': 320000, "CodecID": "A_DTS", 'Format': 'DTS XXL'},
                                           {'BitRate': 320000, "CodecID": "foobar"}]}
     mock_mediainfo.configure_mock(**mediainfo_attrs)
     hpg = HandbrakeProfileGenerator(mock_mediainfo)
     audio_track_list = hpg.build_audio_track_list()
     assert audio_track_list[0]['AudioEncoder'] == 'copy:dtshd'
     assert audio_track_list[1]['AudioEncoder'] == 'copy:dts'
-    assert audio_track_list[2]['AudioEncoder'] == 'av_aac'
+    assert audio_track_list[2]['AudioEncoder'] == 'copy:dtshs'
+    assert audio_track_list[3]['AudioEncoder'] == 'av_aac'
 
 
 @pytest.mark.parametrize("track,expected",
