@@ -43,7 +43,7 @@ def test_build_audio_track_list():
     audio_track_list = hpg.build_audio_track_list()
     assert audio_track_list[0]['AudioEncoder'] == 'copy:dtshd'
     assert audio_track_list[1]['AudioEncoder'] == 'copy:dts'
-    assert audio_track_list[2]['AudioEncoder'] == 'copy:dtshs'
+    assert audio_track_list[2]['AudioEncoder'] == 'copy:dtshd'
     assert audio_track_list[3]['AudioEncoder'] == 'av_aac'
 
 
