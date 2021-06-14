@@ -58,6 +58,8 @@ def main(in_file_name, out_file_name, move_type):
     if get_config('HANDBRAKE_VIDEO_BITRATE'):
         hpg.video_avg_bitrate = get_config('HANDBRAKE_VIDEO_BITRATE')
     hpg.evaluate().render_profile('/tmp/generated.json')
+    f = open('/tmp/generated.json', 'r')
+    logger.debug("Generated profile", extra={'generated_profile': f.read()})
 
     # build the handbrake execution command
     command = ["HandBrakeCLI", "-i", "/encode_in/{}".format(in_file_name), "-o", "/encode_out/{}".format(out_file_name),
