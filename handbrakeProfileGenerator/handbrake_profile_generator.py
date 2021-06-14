@@ -1,3 +1,5 @@
+import copy
+
 from mediainfo.mediainfo import Mediainfo
 import jinja2
 
@@ -44,10 +46,17 @@ class HandbrakeProfileGenerator:
 
     def build_audio_track_list(self):
         audio_tracks = self.mediainfo.get_audio_tracks()
+        return_tracks = []
         for track in audio_tracks:
-            track['AudioEncoder'] = self.get_codec_copy_name(track)
+            audio_encoder = self.get_codec_copy_name(track)
+            track['AudioEncoder'] = audio_encoder
             track['AudioBitrate'] = self.get_audio_bitrate(track)
-        return audio_tracks
+            return_tracks.append(track)
+            if audio_encoder == "copy:dts":
+                duplicate_track = copy.copy(track)
+                duplicate_track['AudioEncoder'] = 'ac3'
+                return_tracks.append(duplicate_track)
+        return return_tracks
 
     @staticmethod
     def get_audio_bitrate(track):

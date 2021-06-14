@@ -43,3 +43,11 @@
     export HANDBRAKE_ENCODER="x265_10bit"
     export HANDBRAKE_QUALITY="40.0"
     python3 wrapper.py Saturday\ Night\ Live\ -\ S46E13\ -\ Regé-Jean\ Page\ +\ Bad\ Bunny\ WEBDL-1080p.mkv Saturday\ Night\ Live\ -\ S46E13\ -\ Regé-Jean\ Page\ +\ Bad\ Bunny\ WEBDL-1080p.mkv
+
+    docker build . -t handbrakecli
+    docker run -it --rm -v /mnt/video/Television/DC\'s\ Legends\ of\ Tomorrow/Season\ 1:/input handbrakecli bash
+    export HANDBRAKE_ENCODER="x265_10bit"
+    export HANDBRAKE_QUALITY="40.0"
+    export HANDBRAKE_VIDEO_BITRATE="10000"
+    python3 wrapper.py S01E01.mkv S01E01.mkv
+    
