@@ -1,5 +1,17 @@
 # Changelog
 
+## [v3.0.1](https://github.com/chrisjohnson00/handbrake-k8s/tree/v3.0.1) (2021-06-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.0...v3.0.1)
+
+**Fixed bugs:**
+
+- fix: duplicating DTS channels with AC3 to avoid no sound on my big tv for "some" tracks [\#22](https://github.com/chrisjohnson00/handbrake-k8s/pull/22) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v3.0.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v3.0.0) (2021-03-04)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.2.0...v3.0.0)
+
 ## [v2.2.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.2.0) (2021-03-04)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v2.1.3...v2.2.0)
