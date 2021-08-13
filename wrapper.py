@@ -1,5 +1,4 @@
 from json import dumps
-from kafka import KafkaProducer
 import sys
 import os
 from prometheus_client import Gauge, start_http_server
@@ -11,6 +10,7 @@ import pygogo as gogo
 from mediainfo.mediainfo import Mediainfo
 from handbrakeProfileGenerator.handbrake_profile_generator import HandbrakeProfileGenerator
 from handbrakeOptionsGenerator.handbrake_options_generator import HandbrakeOptionGenerator
+import pulsar
 
 CONFIG_PATH = "handbrake-job"
 # logging setup
@@ -71,10 +71,12 @@ def main(in_file_name, out_file_name, move_type):
     command = command + hb_option_generator.generate_subtitle_flags()
     # start encoding
     logger.info("Running encoding with generated preset: {}".format(command))
+    logger.info("Encoding starting", extra={'file_name': in_file_name})
     start_time = calendar.timegm(time.gmtime())
     subprocess.run(command, check=True)
     end_time = calendar.timegm(time.gmtime())
     # end encoding
+    logger.info("Encoding completed", extra={'file_name': in_file_name})
     # set metrics
     original_size = os.path.getsize("/encode_in/{}".format(in_file_name))
     encoded_size = os.path.getsize("/encode_out/{}".format(out_file_name))
@@ -90,27 +92,27 @@ def main(in_file_name, out_file_name, move_type):
     subprocess.run(["mv", "/encode_out/{}".format(out_file_name), "/output/{}".format(out_file_name)], check=True)
 
     # remove original/input file
-    logger.info("Removing input file")
+    logger.info("Removing input file", extra={'file_name': in_file_name})
     subprocess.run(["rm", "-f", "/input/{}".format(in_file_name)], check=True)
 
-    # send the message to kafka, if configured
-    kafka_server = get_config('KAFKA_SERVER')
-    kafka_topic = get_config('KAFKA_TOPIC')
-    if kafka_server and kafka_topic:
-        producer = KafkaProducer(bootstrap_servers=[kafka_server],
-                                 acks=1,
-                                 api_version_auto_timeout_ms=10000,
-                                 value_serializer=lambda x:
-                                 dumps(x).encode('utf-8'))
-
-        future = producer.send(topic=kafka_topic, value={'filename': out_file_name, 'move_type': move_type})
-        future.get(timeout=60)
-        logger.info("Sent notification for {}".format(in_file_name))
-    else:
-        logger.warning("KAFKA_SERVER or KAFKA_TOPIC was not found in configs, no messages will be sent")
+    send_completion_message(in_file_name, move_type, out_file_name)
 
     # sleep for 90s to ensure that prometheus scrapes the last set of stats
     time.sleep(90)
+
+
+def send_completion_message(in_file_name, move_type, out_file_name):
+    pulsar_server = get_config('PULSAR_SERVER')
+    pulsar_topic = get_config('PULSAR_TOPIC')
+    if pulsar_server and pulsar_topic:
+        client = pulsar.Client(f"pulsar://{pulsar_server}")
+        producer = client.create_producer(pulsar_topic)
+        message = {'filename': out_file_name, 'move_type': move_type}
+        producer.send(dumps(message).encode('utf-8'))
+        logger.info("Notification sent", extra={'message_body': message, 'topic': pulsar_topic, 'file': in_file_name})
+        client.close()
+    else:
+        logger.warning("PULSAR_SERVER or PULSAR_TOPIC was not found in configs, no messages will be sent")
 
 
 if __name__ == "__main__":

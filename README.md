@@ -1,9 +1,9 @@
 # PyPi Dependencies
 
     pip install --upgrade pip
-    pip install --upgrade kafka-python prometheus-client python-consul pygogo jinja2
+    pip install --upgrade pulsar-client fastavro prometheus-client python-consul pygogo jinja2
     pip freeze > requirements.txt
-    sed -i '/pkg-resources/d' requirements.txt
+    sed -i '/pkg_resources/d' requirements.txt
 
 # Run it manually
 
