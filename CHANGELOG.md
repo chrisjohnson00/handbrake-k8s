@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.0) (2021-08-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.1...v4.0.0)
+
+**Breaking changes:**
+
+- feat: migrating from kafka to pulsar [\#25](https://github.com/chrisjohnson00/handbrake-k8s/pull/25) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v3.0.1](https://github.com/chrisjohnson00/handbrake-k8s/tree/v3.0.1) (2021-06-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.0...v3.0.1)
