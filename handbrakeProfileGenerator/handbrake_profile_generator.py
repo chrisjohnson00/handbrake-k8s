@@ -61,7 +61,13 @@ class HandbrakeProfileGenerator:
     @staticmethod
     def get_audio_bitrate(track):
         if 'BitRate' in track:
-            value = int(track['BitRate'])
+            try:
+                value = int(track['BitRate'])
+            except ValueError as ve:
+                print(f'{track["BitRate"]} was found with an invalid value for BitRate', flush=True)
+                if '/' in track['BitRate']:  # if the value is in the format of '12345 / 12345'
+                    splits = track['BitRate'].split('/')
+                    value = int(splits[0].strip())
             return int(min([value / 1000, 640]))
         elif 'BitRate_Maximum' in track:
             value = int(track['BitRate_Maximum'])

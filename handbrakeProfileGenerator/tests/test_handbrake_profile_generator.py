@@ -51,7 +51,7 @@ def test_build_audio_track_list():
                              ({}, 640),
                              ({'BitRate': '15345'}, 15),
                              ({'BitRate_Maximum': '7194000'}, 7194),
-                             ({'BitRate': "4608000 / 4608000"}, 4608)
+                             ({'BitRate': "4608000 / 4608000"}, 640)
                          ])
 def test_get_audio_bitrate(track, expected):
     mock_mediainfo = mock.Mock(Mediainfo)
