@@ -63,7 +63,7 @@ class HandbrakeProfileGenerator:
         if 'BitRate' in track:
             try:
                 value = int(track['BitRate'])
-            except ValueError as ve:
+            except ValueError:
                 print(f'{track["BitRate"]} was found with an invalid value for BitRate', flush=True)
                 if '/' in track['BitRate']:  # if the value is in the format of '12345 / 12345'
                     splits = track['BitRate'].split('/')
