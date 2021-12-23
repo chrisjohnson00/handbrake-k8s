@@ -1,5 +1,6 @@
 # PyPi Dependencies
 
+    docker run -it -v ${PWD}:/app -w /app python:3.8-slim bash
     pip install --upgrade pip
     pip install --upgrade pulsar-client fastavro prometheus-client python-consul pygogo jinja2
     pip freeze > requirements.txt
