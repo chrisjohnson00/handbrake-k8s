@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.1](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.1) (2021-12-23)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.0...v4.0.1)
+
+**Fixed bugs:**
+
+- fix: special case handling for BitRates of xxx / xxx type format [\#32](https://github.com/chrisjohnson00/handbrake-k8s/pull/32) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.0) (2021-08-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.1...v4.0.0)
