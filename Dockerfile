@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ENV PYTHON_VERSION=3.8.12
+
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y handbrake-cli \
                                                       mediainfo \
@@ -25,13 +27,13 @@ RUN apt-get update && \
     mkdir /encode_out && \
     mkdir /output && \
     chown app /encode_in /encode_out /output && \
-    echo "Installing python 3.8 from source" && \
-    curl --silent --location https://www.python.org/ftp/python/3.8.11/Python-3.8.11.tgz | tar xz -C /tmp && \
-    cd /tmp/Python-3.8.11 && \
+    echo "Installing python ${PYTHON_VERSION} from source" && \
+    curl --silent --location https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz | tar xz -C /tmp && \
+    cd /tmp/Python-${PYTHON_VERSION} && \
     ./configure && \
     make && \
     make install && \
-    rm -rf /tmp/Python-3.8.11
+    rm -rf /tmp/Python-${PYTHON_VERSION}
 
 USER app
 
