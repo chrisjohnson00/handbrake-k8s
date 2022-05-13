@@ -1,0 +1,62 @@
+{
+  "media":{
+    "@ref":"American Sniper (2014).mkv",
+    "track":[
+      {
+        "@type":"General",
+        "AudioCount":"1",
+        "FileExtension":"mkv",
+        "Format":"AC-3",
+        "Format_Commercial_IfAny":"Dolby Digital",
+        "FileSize":"18119393280",
+        "Duration":"226492.416",
+        "OverallBitRate_Mode":"CBR",
+        "OverallBitRate":"640000",
+        "StreamSize":"0",
+        "File_Modified_Date":"UTC 2022-05-12 17:14:23",
+        "File_Modified_Date_Local":"2022-05-12 17:14:23",
+        "extra":{
+          "FileExtension_Invalid":"ac3"
+        }
+      },
+      {
+        "@type":"Audio",
+        "Format":"AC-3",
+        "Format_Commercial_IfAny":"Dolby Digital",
+        "Format_Settings_Endianness":"Big",
+        "Duration":"226492.416",
+        "BitRate_Mode":"CBR",
+        "BitRate":"640000",
+        "Channels":"6",
+        "ChannelPositions":"Front: L C R, Side: L R, LFE",
+        "ChannelLayout":"L R C LFE Ls Rs",
+        "SamplesPerFrame":"1536",
+        "SamplingRate":"48000",
+        "SamplingCount":"10871635968",
+        "FrameRate":"31.250",
+        "Compression_Mode":"Lossy",
+        "StreamSize":"18119393280",
+        "StreamSize_Proportion":"1.00000",
+        "ServiceKind":"CM",
+        "extra":{
+          "bsid":"6",
+          "dialnorm":"-27",
+          "compr":"0.53",
+          "dynrng":"0.27",
+          "acmod":"7",
+          "lfeon":"1",
+          "dialnorm_Average":"-27",
+          "dialnorm_Minimum":"-27",
+          "compr_Average":"0.76",
+          "compr_Minimum":"0.53",
+          "compr_Maximum":"1.49",
+          "compr_Count":"28",
+          "dynrng_Average":"0.28",
+          "dynrng_Minimum":"0.00",
+          "dynrng_Maximum":"0.78",
+          "dynrng_Count":"32"
+        }
+      }
+    ]
+  }
+}
