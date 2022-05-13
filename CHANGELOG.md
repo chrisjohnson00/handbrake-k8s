@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.3](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.3) (2022-05-13)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.2...v4.0.3)
+
+**Fixed bugs:**
+
+- fix: throw exception for when a MKV doesn't have a video track [\#52](https://github.com/chrisjohnson00/handbrake-k8s/pull/52) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.2](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.2) (2022-03-13)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.1...v4.0.2)
