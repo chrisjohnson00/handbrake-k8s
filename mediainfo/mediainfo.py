@@ -76,7 +76,7 @@ class Mediainfo:
 
     def get_video_tracks(self):
         type = 'Video'
-        video_tracks =  self.get_tracks_by_type(type)
+        video_tracks = self.get_tracks_by_type(type)
         if len(video_tracks) < 1:
             raise KeyError('No video tracks found!')
         else:
