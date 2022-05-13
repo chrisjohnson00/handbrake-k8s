@@ -129,6 +129,20 @@ def test_get_video_bit_depth(fs):
     assert bd == '8'
 
 
+def test_get_video_tracks_not_found(fs):
+    """
+    This tests for when the mkv doesn't actually contain a video track... wtf... EXCEPTION!!
+    """
+    with pytest.raises(KeyError):
+        file_name = "americansniper.json"
+        file_path = '/src' + "/" + file_name
+        fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+        with open(file_path) as f:
+            mediainfo = Mediainfo(file_path)
+            mediainfo.set_mediainfo_json(json.load(f))
+        mediainfo.get_video_tracks()
+
+
 def test_get_video_bit_depth_10(fs):
     file_name = "simpsons_s01e11.json"
     file_path = '/src' + "/" + file_name

@@ -76,7 +76,11 @@ class Mediainfo:
 
     def get_video_tracks(self):
         type = 'Video'
-        return self.get_tracks_by_type(type)
+        video_tracks = self.get_tracks_by_type(type)
+        if len(video_tracks) < 1:
+            raise KeyError('No video tracks found!')
+        else:
+            return video_tracks
 
     def get_audio_codec_ids(self):
         audio_tracks = self.get_audio_tracks()
@@ -116,4 +120,7 @@ class Mediainfo:
     def get_video_bit_depth(self):
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
-        return first_track['BitDepth']
+        if 'BitDepth' in first_track:
+            return first_track['BitDepth']
+        else:
+            return None
