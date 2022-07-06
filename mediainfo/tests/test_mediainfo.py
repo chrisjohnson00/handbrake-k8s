@@ -68,6 +68,7 @@ def test_get_video_frame_rate(fs):
     fr = mediainfo.get_video_frame_rate()
     assert fr == '23.976'
 
+
 def test_get_video_frame_rate_variable(fs):
     file_name = "thegreatoutdoors.json"
     file_path = '/src' + "/" + file_name

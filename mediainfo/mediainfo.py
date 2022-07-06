@@ -93,8 +93,8 @@ class Mediainfo:
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
         # If variable frame rate is used, and there is no max frame rate, then default to 30
-        if 'FrameRate' not in first_track and 'FrameRate_Mode' in first_track and first_track[
-            'FrameRate_Mode'] == 'VFR':
+        if 'FrameRate' not in first_track and 'FrameRate_Mode' in first_track \
+                and first_track['FrameRate_Mode'] == 'VFR':
             return '30'
         return first_track['FrameRate']
 
