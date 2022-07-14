@@ -69,6 +69,17 @@ def test_get_video_frame_rate(fs):
     assert fr == '23.976'
 
 
+def test_get_video_frame_rate_variable(fs):
+    file_name = "thegreatoutdoors.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    fr = mediainfo.get_video_frame_rate()
+    assert fr == '30'
+
+
 def test_get_video_frame_rate_mode(fs):
     file_name = "harry_potter_prizoner.json"
     file_path = '/src' + "/" + file_name
