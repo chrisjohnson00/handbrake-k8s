@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.4](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.4) (2022-07-14)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.3...v4.0.4)
+
+**Fixed bugs:**
+
+- fix: variable framerate without a max framerate, now provides a default [\#60](https://github.com/chrisjohnson00/handbrake-k8s/pull/60) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.3](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.3) (2022-05-13)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.2...v4.0.3)
