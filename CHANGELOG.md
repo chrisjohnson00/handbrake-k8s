@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.6](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.6) (2022-11-20)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.5...v4.0.6)
+
+**Merged pull requests:**
+
+- ci: fixing dependabot.yml [\#70](https://github.com/chrisjohnson00/handbrake-k8s/pull/70) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.5](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.5) (2022-08-04)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.4...v4.0.5)
@@ -44,6 +52,10 @@
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.1...v4.0.0)
 
+**Breaking changes:**
+
+- feat: migrating from kafka to pulsar [\#25](https://github.com/chrisjohnson00/handbrake-k8s/pull/25) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v3.0.1](https://github.com/chrisjohnson00/handbrake-k8s/tree/v3.0.1) (2021-06-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v3.0.0...v3.0.1)
@@ -62,7 +74,6 @@
 
 **Breaking changes:**
 
-- feat: migrating from kafka to pulsar [\#25](https://github.com/chrisjohnson00/handbrake-k8s/pull/25) ([chrisjohnson00](https://github.com/chrisjohnson00))
 - feat: dynamically generated profiles [\#6](https://github.com/chrisjohnson00/handbrake-k8s/pull/6) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 ## [v2.1.3](https://github.com/chrisjohnson00/handbrake-k8s/tree/v2.1.3) (2021-01-30)
