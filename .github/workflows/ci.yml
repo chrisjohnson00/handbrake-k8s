@@ -70,7 +70,7 @@ jobs:
           username: 'chrisjohnson00'
           password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
       - name: 'Cache Docker layers'
-        uses: 'actions/cache@v2'
+        uses: 'actions/cache@v3'
         with:
           path: '/tmp/.buildx-cache'
           key: '${{ runner.os }}-buildx-${{ steps.prep.outputs.container_tag }}-${{ github.sha }}'
