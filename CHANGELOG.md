@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.7](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.7) (2022-11-20)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.6...v4.0.7)
+
+**Merged pull requests:**
+
+- chore: bump pulsar-client from 2.10.1 to 2.10.2 [\#71](https://github.com/chrisjohnson00/handbrake-k8s/pull/71) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v4.0.6](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.6) (2022-11-20)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.5...v4.0.6)
