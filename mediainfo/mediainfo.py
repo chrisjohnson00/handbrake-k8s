@@ -101,7 +101,11 @@ class Mediainfo:
     def get_video_frame_rate_mode(self):
         video_tracks = self.get_video_tracks()
         first_track = video_tracks[0]
-        return first_track['FrameRate_Mode']
+        # if the frame rate mode is not set, assume variable frame rate
+        try:
+            return first_track['FrameRate_Mode']
+        except KeyError:
+            return 'VFR'
 
     def get_video_bit_rate_maximum(self):
         video_tracks = self.get_video_tracks()

@@ -90,6 +90,16 @@ def test_get_video_frame_rate_mode(fs):
     frm = mediainfo.get_video_frame_rate_mode()
     assert frm == 'CFR'
 
+def test_get_video_frame_rate_mode_avi(fs):
+    file_name = "troll_hunter.json"
+    file_path = '/src' + "/" + file_name
+    fs.add_real_file(fixture_path + "/" + file_name, target_path=file_path)
+    with open(file_path) as f:
+        mediainfo = Mediainfo(file_path)
+        mediainfo.set_mediainfo_json(json.load(f))
+    frm = mediainfo.get_video_frame_rate_mode()
+    assert frm == 'VFR'
+
 
 @pytest.mark.parametrize("file, exoected_bitrate",
                          [
