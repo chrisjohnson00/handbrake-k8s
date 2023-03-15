@@ -90,6 +90,7 @@ def test_get_video_frame_rate_mode(fs):
     frm = mediainfo.get_video_frame_rate_mode()
     assert frm == 'CFR'
 
+
 def test_get_video_frame_rate_mode_avi(fs):
     file_name = "troll_hunter.json"
     file_path = '/src' + "/" + file_name
