@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.9](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.9) (2023-03-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.8...v4.0.9)
+
+**Fixed bugs:**
+
+- fix: filenames with accents fail \#104 [\#108](https://github.com/chrisjohnson00/handbrake-k8s/pull/108) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.8](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.8) (2023-03-09)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.7...v4.0.8)
