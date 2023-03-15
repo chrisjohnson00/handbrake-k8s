@@ -1,5 +1,16 @@
 FROM ubuntu:22.04
 
+# Set the locale
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
+    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8 && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG en_US.UTF-8
+
+# install apps and dependencies
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y handbrake-cli \
                                                       mediainfo \
