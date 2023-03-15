@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.0.11](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.11) (2023-03-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.10...v4.0.11)
+
+**Closed issues:**
+
+- KeyError: 'FrameRate\_Mode' [\#104](https://github.com/chrisjohnson00/handbrake-k8s/issues/104)
+
+**Merged pull requests:**
+
+- chore: lint fix [\#110](https://github.com/chrisjohnson00/handbrake-k8s/pull/110) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.10](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.10) (2023-03-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.9...v4.0.10)
