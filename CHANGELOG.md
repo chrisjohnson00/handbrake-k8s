@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.0.10](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.10) (2023-03-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.9...v4.0.10)
+
 ## [v4.0.9](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.9) (2023-03-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.8...v4.0.9)
