@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.12](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.12) (2023-03-16)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.11...v4.0.12)
+
+**Fixed bugs:**
+
+- fix: wrong docker image after updating ci workflows [\#111](https://github.com/chrisjohnson00/handbrake-k8s/pull/111) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.11](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.11) (2023-03-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.10...v4.0.11)
