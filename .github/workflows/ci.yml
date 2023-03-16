@@ -51,7 +51,7 @@ jobs:
       - name: 'Prepare'
         id: 'prep'
         run: |
-          DOCKER_IMAGE=handbrakecli
+          DOCKER_IMAGE=chrisjohnson00/handbrakecli
           VERSION=edge
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
