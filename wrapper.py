@@ -73,7 +73,11 @@ def main(in_file_name, out_file_name, move_type):
     logger.info("Running encoding with generated preset: {}".format(command))
     logger.info("Encoding starting", extra={'file_name': in_file_name})
     start_time = calendar.timegm(time.gmtime())
-    subprocess.run(command, check=True)
+    try:
+        subprocess.run(command, check=True, capture_output=True)
+    except subprocess.CalledProcessError as e:
+        logger.error("Encoding failed", extra={'error_message': e})
+        raise e
     end_time = calendar.timegm(time.gmtime())
     # end encoding
     logger.info("Encoding completed", extra={'file_name': in_file_name})
