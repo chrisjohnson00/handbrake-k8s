@@ -1,5 +1,14 @@
 # Changelog
 
+## [v4.0.13](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.13) (2023-04-13)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.12...v4.0.13)
+
+**Merged pull requests:**
+
+- ci: fix auto release [\#113](https://github.com/chrisjohnson00/handbrake-k8s/pull/113) ([chrisjohnson00](https://github.com/chrisjohnson00))
+- chore: adding better error logging [\#112](https://github.com/chrisjohnson00/handbrake-k8s/pull/112) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.12](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.12) (2023-03-16)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.11...v4.0.12)
