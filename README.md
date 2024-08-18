@@ -15,7 +15,7 @@ pip freeze > requirements.txt
     export HANDBRAKE_ENCODER="x265_10bit"
     export HANDBRAKE_QUALITY="40.0"
     export HANDBRAKE_VIDEO_BITRATE="10000"
-    python3 wrapper.py 'The Simpsons - S01E11 - The Crepes of Wrath WEBDL-1080p.mkv' 'The Simpsons - S01E11 - The Crepes of Wrath WEBDL-1080p.mkv'
+    python3 wrapper.py 'The Simpsons - S01E11 - The Crepes of Wrath WEBRip-1080p Proper.mp4' 'The Simpsons - S01E11 - The Crepes of Wrath WEBRip-1080p Proper.mp4'
     
     docker run -it --rm -v /mnt/video/Television/SpongeBob\ SquarePants/Season\ 1:/input handbrakecli bash
     export HANDBRAKE_ENCODER="x265_10bit"
