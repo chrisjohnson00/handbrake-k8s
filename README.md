@@ -1,10 +1,11 @@
 # PyPi Dependencies
 
-    docker run -it -v ${PWD}:/app -w /app python:3.10-slim bash
-    pip install --upgrade pip
-    pip install --upgrade pulsar-client==2.* fastavro prometheus-client python-consul pygogo jinja2
-    pip freeze > requirements.txt
-    sed -i '/pkg_resources/d' requirements.txt
+```shell
+docker run -it -v ${PWD}:/app -w /app python:3.10-slim bash
+pip install --upgrade pip
+pip install --upgrade pulsar-client fastavro prometheus-client python-consul pygogo jinja2
+pip freeze > requirements.txt
+```
 
 # Run it manually
 
@@ -14,13 +15,14 @@
     export HANDBRAKE_ENCODER="x265_10bit"
     export HANDBRAKE_QUALITY="40.0"
     export HANDBRAKE_VIDEO_BITRATE="10000"
-    python3 wrapper.py 'The Simpsons - S01E11 - The Crepes of Wrath WEBDL-1080p.mkv' 'The Simpsons - S01E11 - The Crepes of Wrath WEBDL-1080p.mkv'
+    python3 wrapper.py 'The Simpsons - S01E11 - The Crepes of Wrath WEBRip-1080p Proper.mp4' 'The Simpsons - S01E11 - The Crepes of Wrath WEBRip-1080p Proper.mp4'
     
     docker run -it --rm -v /mnt/video/Television/SpongeBob\ SquarePants/Season\ 1:/input handbrakecli bash
     export HANDBRAKE_ENCODER="x265_10bit"
     export HANDBRAKE_QUALITY="40.0"
     export HANDBRAKE_VIDEO_BITRATE="10000"
-    python3 wrapper.py 'SpongeBob SquarePants - S01E02 - Reef Blower SDTV.mkv' 'SpongeBob SquarePants - S01E02 - Reef Blower SDTV.mkv'
+    export HANDBRAKE_LOG_SAMPLE_RATE=0.5
+    python3 wrapper.py "SpongeBob SquarePants - S01E16-17 - Sandy's Rocket + Squeaky Boots WEBDL-1080p.mkv" "SpongeBob SquarePants - S01E16-17 - Sandy's Rocket + Squeaky Boots WEBDL-1080p.mkv"
 
     docker run -it --rm -v /mnt/video/Movies/Bad\ Words\ \(2013\):/input handbrakecli bash
     export HANDBRAKE_ENCODER="x265_10bit"
