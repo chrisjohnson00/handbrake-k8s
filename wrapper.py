@@ -6,6 +6,7 @@ import subprocess
 import time
 import calendar
 import consul
+import random
 import pygogo as gogo
 from mediainfo.mediainfo import Mediainfo
 from handbrakeProfileGenerator.handbrake_profile_generator import HandbrakeProfileGenerator
@@ -74,7 +75,17 @@ def main(in_file_name, out_file_name, move_type):
     logger.info("Encoding starting", extra={'file_name': in_file_name})
     start_time = calendar.timegm(time.gmtime())
     try:
-        subprocess.run(command, check=True, capture_output=True)
+        log_sample_rate = float(os.getenv("HANDBRAKE_LOG_SAMPLE_RATE", "0.01"))  # 1% of the log output
+        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True) as process:
+            # Stream the output line by line
+            for line in process.stdout:
+                if random.random() < log_sample_rate:  # Log a sample of the output
+                    logger.info(line.strip())
+        # Check the return code
+        if process.returncode != 0:
+            logger.error(f"Command failed with return code {process.returncode}")
+        else:
+            logger.info("Command completed successfully")
     except subprocess.CalledProcessError as e:
         logger.error("Encoding failed", extra={'error_message': e})
         raise e
