@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.1.0](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.1.0) (2024-08-19)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.13...v4.1.0)
+
+**Implemented enhancements:**
+
+- feat: update to ubuntu 24.04 and HandBrakeCLI 1.7.x [\#128](https://github.com/chrisjohnson00/handbrake-k8s/pull/128) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.13](https://github.com/chrisjohnson00/handbrake-k8s/tree/v4.0.13) (2023-04-13)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-k8s/compare/v4.0.12...v4.0.13)
