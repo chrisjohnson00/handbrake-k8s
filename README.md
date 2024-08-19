@@ -21,6 +21,7 @@ pip freeze > requirements.txt
     export HANDBRAKE_ENCODER="x265_10bit"
     export HANDBRAKE_QUALITY="40.0"
     export HANDBRAKE_VIDEO_BITRATE="10000"
+    export HANDBRAKE_LOG_SAMPLE_RATE=0.5
     python3 wrapper.py "SpongeBob SquarePants - S01E16-17 - Sandy's Rocket + Squeaky Boots WEBDL-1080p.mkv" "SpongeBob SquarePants - S01E16-17 - Sandy's Rocket + Squeaky Boots WEBDL-1080p.mkv"
 
     docker run -it --rm -v /mnt/video/Movies/Bad\ Words\ \(2013\):/input handbrakecli bash
