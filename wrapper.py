@@ -1,17 +1,19 @@
-from json import dumps
-import sys
-import os
-from prometheus_client import Gauge, start_http_server
-import subprocess
-import time
 import calendar
-import consul
+from json import dumps
+import os
 import random
-import pygogo as gogo
-from mediainfo.mediainfo import Mediainfo
-from handbrakeProfileGenerator.handbrake_profile_generator import HandbrakeProfileGenerator
-from handbrakeOptionsGenerator.handbrake_options_generator import HandbrakeOptionGenerator
+import subprocess
+import sys
+import time
+
+import consul
+from prometheus_client import Gauge, start_http_server
 import pulsar
+import pygogo as gogo
+
+from handbrakeOptionsGenerator.handbrake_options_generator import HandbrakeOptionGenerator
+from handbrakeProfileGenerator.handbrake_profile_generator import HandbrakeProfileGenerator
+from mediainfo.mediainfo import Mediainfo
 
 CONFIG_PATH = "handbrake-job"
 # logging setup
